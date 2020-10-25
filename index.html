@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <title>Tareabra</title>
+</head>
+<body>
+
+    <!------------------------- cabecera de botones --------------------------->
+
+    <div class="container my-5">
+        <div class="row text-center my-5">
+            <div class="col-12 d-flex justify-content-between">
+            <button class="btn btn-success" id="test">Completado</button>
+            <button class="btn btn-danger" id="test2">No completado</button>
+            <button class="btn btn-info" data-newtask="expand-btn">Agregar tareas</button>
+        </div> 
+    </div>
+
+<!------------------------- formulario --------------------------->
+
+    <form class="my-5" data-newtask="form">
+        <div class="form-group">
+            <label for="title">Titulo</label>
+            <input type="text" class="form-control" id="title" placeholder="Ex: Barrer"
+            data-newtask="title-input" value="lavar platos">
+        </div>
+        <div class="form-group">
+            <label for="description">Descripción</label>
+            <input type="text" class="form-control" id="description" placeholder="Ex: Comedor, cocina y dormitorio"
+            data-newtask="description-input" value="los de la cocina">
+        </div>
+        <button class="btn btn-info" data-newtask="create">Crear</button>
+    </form>
+
+
+
+<!------------------------- cartas --------------------------->
+        <div class="row text-center" id="cards" data-cards>
+
+            <!-- <div class="col-3">
+                <div data-id="" data-status="done" class="card p-2 border-success">
+                    <h5 class="card-title">Tarea</h5>
+                    <p class="card-text">Descripcion: Lorem ipsum dolor sit.</p>
+                    <button class="btn btn-info">Estado</button>
+                    <button class="btn btn-danger">Borrar</button>
+                </div>
+            </div> -->
+
+        </div>
+    </div>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <script src="app.js"></script>
+</body>
+</html>
