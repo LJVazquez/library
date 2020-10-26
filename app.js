@@ -14,20 +14,17 @@ function addToLibrary(input){
 
 
 function addTask(task){
-    let defaultCard = $(`<div class="col-3"><div class="card p-2"><h5 class="card-title">${task.name}</h5><p class="card-text">${task.description}</p><button class="btn btn-info">Estado</button><button class="btn btn-danger">Borrar</button></div></div>`);
+    let defaultCard = $(`<div class="col-3" data-id="${task.id}"><div class="card p-2"><h5 class="card-title">${task.name}</h5><p class="card-text">${task.description}</p><button class="btn btn-info">Estado</button><button class="btn btn-danger">Borrar</button></div></div>`);
     $('[data-cards]').append(defaultCard).append(defaultCard);
 }
 
 
-// pruebaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-let cabra = new Task('cabras', 'perros', 0)
-addToLibrary(cabra)
-displayTasks()
-
-
 function displayTasks(){
     for (let i in library){
-        addTask(library[i]);
+        let div = document.querySelector(`[data-id="${library[i]['id']}"]`);
+        if (!div){
+            addTask(library[i]);
+        }
     }
 }
 
@@ -52,8 +49,6 @@ function createCard(){
         addToLibrary(newTask)
         displayTasks();
     });
-
-
 }
 
 createCard()
