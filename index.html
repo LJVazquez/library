@@ -14,9 +14,10 @@
     <div class="container my-5">
         <div class="row text-center my-5">
             <div class="col-12 d-flex justify-content-between">
-            <button class="btn btn-success" id="test">Completado</button>
-            <button class="btn btn-danger" id="test2">No completado</button>
-            <button class="btn btn-info" data-newtask="expand-btn">Agregar tareas</button>
+            <button class="btn btn-success" data-btn="toggle-completed">Completado</button>
+            <button class="btn btn-info" data-btn="toggle-incomplete">No completado</button>
+            <button class="btn btn-dark" data-newtask="expand-btn">Agregar tareas</button>
+            <img src="goat.jpg" alt="" class="img">
         </div> 
     </div>
 
@@ -26,12 +27,12 @@
         <div class="form-group">
             <label for="title">Titulo</label>
             <input type="text" class="form-control" id="title" placeholder="Ex: Barrer"
-            data-newtask="title-input" value="lavar platos">
+            data-newtask="title-input">
         </div>
         <div class="form-group">
             <label for="description">Descripción</label>
             <input type="text" class="form-control" id="description" placeholder="Ex: Comedor, cocina y dormitorio"
-            data-newtask="description-input" value="los de la cocina">
+            data-newtask="description-input">
         </div>
         <button class="btn btn-info" data-newtask="create">Crear</button>
     </form>
@@ -39,8 +40,8 @@
 
 
 <!------------------------- cartas --------------------------->
-        <div class="row text-center" id="cards" data-cards>
-
+        <div class="row text-center bg-info" data-cards="incomplete">
+            <div class="col-12"><h2>Tareas incompletas</h2></div>
             <!-- $(`<div class="col-3" data-id="${task.id}">
                 <div class="card p-2">
                     <h5 class="card-title">${task.name}</h5>
@@ -58,8 +59,11 @@
                     <button class="btn btn-danger">Borrar</button>
                 </div>
             </div> -->
-
         </div>
+        <div class="row text-center bg-success" data-cards="completed">
+            <div class="col-12"><h2>Tareas completadas</h2></div>
+        </div>
+
     </div>
 
 
