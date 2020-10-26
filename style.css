@@ -1,3 +1,11 @@
 *{
     /border: 1px solid black;
 }
+
+.dsnone{
+    display: none;
+}
+
+.tarj{
+    transition: all 1s;
+}
