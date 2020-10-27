@@ -8,13 +8,13 @@ class Task{
     }
 }
 
-//localStorage.clear()
-
+// Copia los array de objetos de las librerias  en el localstorage
 function updateLocalStorage(){
     localStorage.setItem('incompleteTasks', JSON.stringify(incompleteTasks)); 
     localStorage.setItem('completedTasks', JSON.stringify(completedTasks));
 }
 
+// Copa los datos del localstorage en los array de objetos de las librerias 
 function retrieveFromLocalStorage(){
     if (localStorage.getItem('incompleteTasks')) incompleteTasks = JSON.parse(localStorage.getItem('incompleteTasks'));
     if (localStorage.getItem('completedTasks')) completedTasks = JSON.parse(localStorage.getItem('completedTasks'));
@@ -25,44 +25,33 @@ function addToincompleteTasks(input){
     updateLocalStorage();
 }
 
-function addNewCard(task){ 
-//-------------crea tarjeta ----------------//
-// el id es el index que tiene el elemento en el array incompleteTasks
+// boton delete de las tarjetas
+function addDeleteButtonListeners(taskType){
 
-    let defaultCard = 
-    $(`<div class="col-6 col-md-4 col-lg-3 mb-3 dsnone" data-id="${incompleteTasks.indexOf(task)}"> 
-        <div class="card p-2 tarj">
-            <h5 class="card-title">${task.name}</h5>
-            <p class="card-text">${task.description}</p>
-            <button class="btn btn-info" data-card="status">Completar</button>
-            <button class="btn btn-danger" data-card="del">Borrar</button>
-        </div>
-    </div>`);
-    
-    $('[data-cards="incomplete"]').append(defaultCard);
-    $(defaultCard).show(500);
-    
-//-------------------BOTON BORRAR -------------------------------//
-    let deleteButtons = $('[data-card="del"]');
-        $.each(deleteButtons, function (index, element) { 
-            if (!element.dataset.listener){ //si no tiene ya atribuido un listener
+    const deleteButtons = $('[data-card="del"]');
+    $.each(deleteButtons, function (index, element) { 
+        if (!element.dataset.listener){ //si no tiene ya atribuido un listener
 
-                $(element).click(function (e) { 
-                    //div padre, la tarjeta quien contiene el data-id;
-                    let parentElem = element.parentElement.parentElement; 
-                    let dataId = parentElem.dataset.id
+            $(element).click(function (e) { 
+                //div padre, la tarjeta quien contiene el data-id;
+                let parentElem = element.parentElement.parentElement; 
+                let dataId = parentElem.dataset.id
 
-                    incompleteTasks.splice(dataId, 1); // borra el elemento del array
-                    updateLocalStorage();
-                    updateCardsDisplay(); // actualiza las tarjetas en pantalla;
-                });
+                taskType.splice(dataId, 1); // borra el elemento del array
+                updateLocalStorage();
+                updateCardsDisplay(); // actualiza las tarjetas en pantalla;
+            });
 
-                // añade la propiedad para saber que ya tiene un listener
-                element.setAttribute('data-listener', 'true'); 
-            }
-        });
-//------------funcion boton status-----------//
-    let statusButtons = $('[data-card="status"]');
+            // añade la propiedad para saber que ya tiene un listener
+            element.setAttribute('data-listener', 'true'); 
+        }
+    });
+}
+
+// boton completar de las tarjetas
+function addStatusButtonListeners(){
+
+    const statusButtons = $('[data-card="status"]');
     $.each(statusButtons, function (index, element){
         if (!element.dataset.listener){ //si no tiene ya atribuido un listener
 
@@ -71,118 +60,114 @@ function addNewCard(task){
                 let parentElem = element.parentElement.parentElement;
                 let dataId = parentElem.dataset.id
                 
-                completedTasks.push(incompleteTasks[dataId])
-                incompleteTasks.splice(dataId, 1);
+                completedTasks.push(incompleteTasks[dataId]) // envia el elemento a completed
+                incompleteTasks.splice(dataId, 1); // elimina el elemento de incomplete
                 updateLocalStorage();
                 updateCardsDisplay();
             })
+
+        // añade la propiedad para saber que ya tiene un listener
         element.setAttribute('data-listener', 'true');
         }
     })
 }
 
+//------------- crear tarjeta de tarea ----------------//
+function addTaskCard(task){ 
+    // el id es el index que tiene el elemento en el array incompleteTasks
+    
+    let cardTemplate = 
+    $(`<div class="col-6 col-md-4 col-lg-3 mb-3 dsnone" data-id="${incompleteTasks.indexOf(task)}"> 
+        <div class="card border-info p-2 text-center tarj">
+            <h5 class="card-title">${task.name}</h5>
+            <p class="card-text">${task.description}</p>
+            <button class="btn btn-success" data-card="status">Completar</button>
+        </div>
+    </div>`);
+    
+    $('[data-cards="incomplete"]').append(cardTemplate);
+    $(cardTemplate).show(500);
+    
+    addStatusButtonListeners();
+    // addDeleteButtonListeners(incompleteTasks); para agregar un boton borrar
+}
 
-function addCompletedCard(task){ 
+function addCompletedTaskCard(task){ 
     //-------------crea tarjeta ----------------//
     // el id es el index que tiene el elemento en el array incompleteTasks
     
-    let defaultCard = 
-    $(`<div class="col-3 dsnone" data-id="${completedTasks.indexOf(task)}"> 
-        <div class="card p-2 tarj">
+    let cardTemplate = 
+    $(`<div class="col-6 col-md-4 col-lg-3 mb-3 dsnone" data-id="${completedTasks.indexOf(task)}"> 
+        <div class="card border-success p-2 text-center tarj">
             <h5 class="card-title">${task.name}</h5>
             <p class="card-text">${task.description}</p>
             <button class="btn btn-danger" data-card="del">Borrar</button>
         </div>
     </div>`);
     
-    $('[data-cards="completed"]').append(defaultCard);
-    $(defaultCard).show(500);
+    $('[data-cards="completed"]').append(cardTemplate); // append al div de tareas
+    $(cardTemplate).show(500); //la tarjeta se crea con 'display:none' para poder tener el efecto
         
-    
-    //------------funcion boton borrar-----------//
-    // elimina el elemento de la libreria y llama a updateCardsDisplay();
-    
-        let delBtns = document.querySelectorAll('[data-card="del"]');
-    
-            delBtns.forEach( (element)=>{
-                // si data-listener true quiere decir que ya se le agrego el evento
-                // asi que hay que saltearlo para no duplicarlo muchas veces
-                if (!element.dataset.listener){
-    
-                    element.addEventListener('click', ()=>{
-                        
-                        let parentElem = element.parentElement.parentElement;
-    
-                        completedTasks.splice(parentElem.dataset.id, 1);
-                        updateLocalStorage();
-                        updateCardsDisplay();
-                })
-            element.setAttribute('data-listener', 'true');
-            }
-        })
+    addDeleteButtonListeners(completedTasks);
 }
 
-function removeCards(){
 // elimina todas las cards para no tener problemas al crear las nuevas
+function removeCards(){
     const cards = $('[data-id]')   
     $.each(cards, function (index, element) { 
         $(element).hide(100, ()=>{
             $(element).remove();
         })
-        
     });
-    
-    // cards.forEach((element) =>{
-    //     element.remove();
-    // })
 }
 
 function updateCardsDisplay(){
-    removeCards()
+    removeCards();
 
-// crea nuevas cards con cada elemento del array incompleteTasks //
+    // crea nuevas cards con cada elemento del array incompleteTasks //
     for (let i in incompleteTasks){
-        addNewCard(incompleteTasks[i]);
+        addTaskCard(incompleteTasks[i]);
     }
+    // crea nuevas cards con cada elemento del array completedTasks //
     for (let i in completedTasks){
-        addCompletedCard(completedTasks[i]);
+        addCompletedTaskCard(completedTasks[i]);
     }
 }
 
-function expandForm(){
-    $('[data-newtask="expand-btn"]').click(function () { 
-        $('[data-newtask="form"]').toggle(500);
-    });
-}
-
+// boton crear tarea del formulario 'Agregar tareas' //
 function createCard(){
-    //------------crear nueva tarjeta-----------//
-
-    let title = $('[data-newtask="title-input"]');
-    let desc = $('[data-newtask="description-input"]');
-    let btn = $('[data-newtask="create"]')
+    //------------ crear nueva tarjeta con los datos del form -----------//
+    const title = $('[data-newtask="title-input"]');
+    const desc = $('[data-newtask="description-input"]');
+    const btn = $('[data-newtask="create"]');
     
     $(btn).click(function (e) { 
         e.preventDefault(); // para que no funcione como un submit
-        let newTask = new Task(title.val(), desc.val());
-        //id++; id va a seguir subiendo mientras se agreguen tareas
-        addToincompleteTasks(newTask)
-        updateCardsDisplay();
+        let newTask = new Task(title.val(), desc.val()); // crea una nueva tarea
+
+        addToincompleteTasks(newTask); // agrega la tarea al array incompleteTasks
+        updateCardsDisplay(); // actualiza las tarjetas visibles en pantalla
     });
 }
 
+function setButtons(){
+    //--------- toggle no completadas ---------//
+    $('[data-btn="toggle-incomplete"]').click(function(){
+        $('[data-cards="incomplete"]').toggle(500);
+    })
+    //--------- toggle completadas ---------//
+    $('[data-btn="toggle-completed"]').click(function(){
+        $('[data-cards="completed"]').toggle(500);
+    })
+    //--------- toggle formulario ---------//
+    $('[data-newtask="expand-btn"]').click(function () { 
+        $('[data-newtask="form"]').toggle(500);
+    });
+    createCard() // boton crear del formulario
+}
 
-$('[data-btn="toggle-completed"]').click(function(){
-    $('[data-cards="completed"]').toggle(500);
-    
-})
-
-$('[data-btn="toggle-incomplete"]').click(function(){
-    $('[data-cards="incomplete"]').toggle(500);
-    
-})
-
-createCard()
-expandForm()
-retrieveFromLocalStorage()
-updateCardsDisplay()
+$(document).ready(function initialLoad() {
+    setButtons() // establece los listeners de los botones
+    retrieveFromLocalStorage() // busca si hay datos de las tarjetas almacenados
+    updateCardsDisplay() // actualiza las tarjetas en pantalla
+});
