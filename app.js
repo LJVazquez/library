@@ -1,6 +1,7 @@
 let incompleteTasks = [];
 let completedTasks = [];
 
+
 class Task{
     constructor(name, description){
         this.name = name;
@@ -9,17 +10,31 @@ class Task{
     }
 }
 
-function addToincompleteTasks(input){
-    incompleteTasks.push(input);
+//localStorage.clear()
+
+function updateLocalStorage(){
+    localStorage.setItem('incompleteTasks', JSON.stringify(incompleteTasks)); 
+    localStorage.setItem('completedTasks', JSON.stringify(completedTasks));
 }
 
+function retrieveFromLocalStorage(){
+    if (localStorage.getItem('incompleteTasks')) incompleteTasks = JSON.parse(localStorage.getItem('incompleteTasks'));
+    if (localStorage.getItem('completedTasks')) completedTasks = JSON.parse(localStorage.getItem('completedTasks'));
+}
+
+function addToincompleteTasks(input){
+    incompleteTasks.push(input);
+    updateLocalStorage();
+    console.table(localStorage)
+    console.log(localStorage.completedTasks)
+}
 
 function addNewCard(task){ 
 //-------------crea tarjeta ----------------//
 // el id es el index que tiene el elemento en el array incompleteTasks
 
     let defaultCard = 
-    $(`<div class="col-3 dsnone" data-id="${incompleteTasks.indexOf(task)}"> 
+    $(`<div class="col-6 col-md-4 col-lg-3 mb-3 dsnone" data-id="${incompleteTasks.indexOf(task)}"> 
         <div class="card p-2 tarj">
             <h5 class="card-title">${task.name}</h5>
             <p class="card-text">${task.description}</p>
@@ -72,8 +87,10 @@ function addNewCard(task){
                     completedTasks.push(incompleteTasks[idNum])
                     incompleteTasks.splice(parentElem.dataset.id, 1);
                     
+                    
                     $(element).hide(200, ()=>{
                         $(parentElem).toggleClass('border-success');
+                        updateLocalStorage();
                         updateCardsDisplay()
                     });
             })
@@ -114,6 +131,7 @@ function addCompletedCard(task){
                         let parentElem = element.parentElement.parentElement;
     
                         completedTasks.splice(parentElem.dataset.id, 1);
+                        updateLocalStorage();
                         updateCardsDisplay();
                 })
             element.setAttribute('data-listener', 'true');
@@ -185,3 +203,5 @@ $('[data-btn="toggle-incomplete"]').click(function(){
 
 createCard()
 expandForm()
+retrieveFromLocalStorage()
+updateCardsDisplay()
