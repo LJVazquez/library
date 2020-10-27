@@ -1,12 +1,10 @@
 let incompleteTasks = [];
 let completedTasks = [];
 
-
 class Task{
     constructor(name, description){
         this.name = name;
         this.description = description;
-        this.status = 'incomplete';
     }
 }
 
@@ -25,8 +23,6 @@ function retrieveFromLocalStorage(){
 function addToincompleteTasks(input){
     incompleteTasks.push(input);
     updateLocalStorage();
-    console.table(localStorage)
-    console.log(localStorage.completedTasks)
 }
 
 function addNewCard(task){ 
@@ -46,58 +42,45 @@ function addNewCard(task){
     $('[data-cards="incomplete"]').append(defaultCard);
     $(defaultCard).show(500);
     
+//-------------------BOTON BORRAR -------------------------------//
+    let deleteButtons = $('[data-card="del"]');
+        $.each(deleteButtons, function (index, element) { 
+            if (!element.dataset.listener){ //si no tiene ya atribuido un listener
 
-//------------funcion boton borrar-----------//
-// elimina el elemento de la libreria y llama a updateCardsDisplay();
+                $(element).click(function (e) { 
+                    //div padre, la tarjeta quien contiene el data-id;
+                    let parentElem = element.parentElement.parentElement; 
+                    let dataId = parentElem.dataset.id
 
-    let delBtns = document.querySelectorAll('[data-card="del"]');
+                    incompleteTasks.splice(dataId, 1); // borra el elemento del array
+                    updateLocalStorage();
+                    updateCardsDisplay(); // actualiza las tarjetas en pantalla;
+                });
 
-        delBtns.forEach( (element)=>{
-            // si data-listener true quiere decir que ya se le agrego el evento
-            // asi que hay que saltearlo para no duplicarlo muchas veces
-            if (!element.dataset.listener){
-
-                element.addEventListener('click', ()=>{
-                    
-                    let parentElem = element.parentElement.parentElement;
-
-                    incompleteTasks.splice(parentElem.dataset.id, 1);
-                    updateCardsDisplay();
-            })
-        element.setAttribute('data-listener', 'true');
-        }
-    })
-
+                // añade la propiedad para saber que ya tiene un listener
+                element.setAttribute('data-listener', 'true'); 
+            }
+        });
 //------------funcion boton status-----------//
+    let statusButtons = $('[data-card="status"]');
+    $.each(statusButtons, function (index, element){
+        if (!element.dataset.listener){ //si no tiene ya atribuido un listener
 
-
-    let statusBtns = document.querySelectorAll('[data-card="status"]');
-
-        statusBtns.forEach( (element)=>{
-            // si data-listener true quiere decir que ya se le agrego el evento
-            // asi que hay que saltearlo para no duplicarlo muchas veces
-            if (!element.dataset.listener){
-
-                element.addEventListener('click', ()=>{
-                    
-                    let parentElem = element.parentElement;
-                    let idNum = parentElem.parentElement.dataset.id;
-                    console.log(idNum)
-                    incompleteTasks[idNum].status = 'complete';
-                    completedTasks.push(incompleteTasks[idNum])
-                    incompleteTasks.splice(parentElem.dataset.id, 1);
-                    
-                    
-                    $(element).hide(200, ()=>{
-                        $(parentElem).toggleClass('border-success');
-                        updateLocalStorage();
-                        updateCardsDisplay()
-                    });
+            $(element).click(function (e){
+                //div padre, la tarjeta quien contiene el data-id;
+                let parentElem = element.parentElement.parentElement;
+                let dataId = parentElem.dataset.id
+                
+                completedTasks.push(incompleteTasks[dataId])
+                incompleteTasks.splice(dataId, 1);
+                updateLocalStorage();
+                updateCardsDisplay();
             })
         element.setAttribute('data-listener', 'true');
         }
     })
 }
+
 
 function addCompletedCard(task){ 
     //-------------crea tarjeta ----------------//
@@ -138,8 +121,6 @@ function addCompletedCard(task){
             }
         })
 }
-
-
 
 function removeCards(){
 // elimina todas las cards para no tener problemas al crear las nuevas
