@@ -14,54 +14,42 @@
     <div class="container my-5">
         <div class="row text-center my-5">
             <div class="col-12 d-flex justify-content-between">
-            <button class="btn btn-success" data-btn="toggle-completed">Completado</button>
-            <button class="btn btn-info" data-btn="toggle-incomplete">No completado</button>
-            <button class="btn btn-dark" data-newtask="expand-btn">Agregar tareas</button>
-            <img src="goat.jpg" alt="" class="img">
-        </div> 
-    </div>
+                <button class="btn btn-success" data-btn="toggle-completed">Completadas</button>
+                <button class="btn btn-info" data-btn="toggle-incomplete">No completadas</button>
+                <button class="btn btn-dark" data-newtask="expand-btn">Agregar tareas</button>
+                <img src="goat.jpg" alt="" class="img">
+            </div> 
+        </div>
 
 <!------------------------- formulario --------------------------->
 
-    <form class="my-5 dsnone" data-newtask="form">
-        <div class="form-group">
-            <label for="title">Titulo</label>
-            <input type="text" class="form-control" id="title" placeholder="Ex: Barrer"
-            data-newtask="title-input">
+        <div class="row border">
+            <div class="col-12">
+                <form class="my-5 dsnone" data-newtask="form">
+                    <div class="form-group">
+                        <label for="title">Titulo</label>
+                        <input type="text" class="form-control" id="title" maxlength="34"
+                        placeholder="Ex: Barrer" data-newtask="title-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Descripción</label>
+                        <input type="text" class="form-control" id="description" maxlength="198"
+                        placeholder="Ex: Comedor, cocina y dormitorio"
+                        data-newtask="description-input">
+                    </div>
+                    <button class="btn btn-info" data-newtask="create">Crear</button>
+                </form>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="description">Descripción</label>
-            <input type="text" class="form-control" id="description" placeholder="Ex: Comedor, cocina y dormitorio"
-            data-newtask="description-input">
+
+
+
+<!------------------------- contenedores de tarjetas --------------------------->
+        <div class="row border border-info my-5" data-cards="incomplete">
+            <div class="col-12"><h2>Tareas</h2></div>
         </div>
-        <button class="btn btn-info" data-newtask="create">Crear</button>
-    </form>
-
-
-
-<!------------------------- cartas --------------------------->
-        <div class="row text-center bg-info" data-cards="incomplete">
-            <div class="col-12"><h2>Tareas incompletas</h2></div>
-            <!-- $(`<div class="col-3" data-id="${task.id}">
-                <div class="card p-2">
-                    <h5 class="card-title">${task.name}</h5>
-                    <p class="card-text">${task.description}</p>
-                    <button class="btn btn-info" data-card="status">Estado</button>
-                    <button class="btn btn-danger" data-card="del">Borrar</button>
-                </div>
-            </div>`); -->
-
-            <!-- <div class="col-3">
-                <div data-id="" data-status="done" class="card p-2 border-success">
-                    <h5 class="card-title">Tarea</h5>
-                    <p class="card-text">Descripcion: Lorem ipsum dolor sit.</p>
-                    <button class="btn btn-info">Estado</button>
-                    <button class="btn btn-danger">Borrar</button>
-                </div>
-            </div> -->
-        </div>
-        <div class="row text-center bg-success" data-cards="completed">
-            <div class="col-12"><h2>Tareas completadas</h2></div>
+        <div class="row border border-success" data-cards="completed">
+            <div class="col-12"><h2>Completadas</h2></div>
         </div>
 
     </div>
