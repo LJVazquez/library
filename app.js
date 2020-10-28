@@ -77,11 +77,11 @@ function addTaskCard(task){
     // el id es el index que tiene el elemento en el array incompleteTasks
     
     let cardTemplate = 
-    $(`<div class="col-6 col-md-4 col-lg-3 mb-3 dsnone" data-id="${incompleteTasks.indexOf(task)}"> 
-        <div class="card border-info p-2 text-center tarj">
+    $(`<div class="col-12 col-md-6 col-lg-3 mb-3 dsnone" data-id="${incompleteTasks.indexOf(task)}"> 
+        <div class="card border-lpurple p-2 text-center tarj">
             <h5 class="card-title">${task.name}</h5>
             <p class="card-text">${task.description}</p>
-            <button class="btn btn-success" data-card="status">Completar</button>
+            <button class="btn rounded-pill bg-lpurple" data-card="status">Completar</button>
         </div>
     </div>`);
     
@@ -97,11 +97,11 @@ function addCompletedTaskCard(task){
     // el id es el index que tiene el elemento en el array incompleteTasks
     
     let cardTemplate = 
-    $(`<div class="col-6 col-md-4 col-lg-3 mb-3 dsnone" data-id="${completedTasks.indexOf(task)}"> 
-        <div class="card border-success p-2 text-center tarj">
+    $(`<div class="col-12 col-md-6 col-lg-3 mb-3 dsnone" data-id="${completedTasks.indexOf(task)}"> 
+        <div class="card border-red p-2 text-center tarj">
             <h5 class="card-title">${task.name}</h5>
             <p class="card-text">${task.description}</p>
-            <button class="btn btn-danger" data-card="del">Borrar</button>
+            <button class="btn rounded-pill bg-lred" data-card="del">Borrar</button>
         </div>
     </div>`);
     
@@ -144,7 +144,8 @@ function createCard(){
     $(btn).click(function (e) { 
         e.preventDefault(); // para que no funcione como un submit
         let newTask = new Task(title.val(), desc.val()); // crea una nueva tarea
-
+        title.val('');
+        desc.val('');
         addToincompleteTasks(newTask); // agrega la tarea al array incompleteTasks
         updateCardsDisplay(); // actualiza las tarjetas visibles en pantalla
     });
@@ -159,10 +160,6 @@ function setButtons(){
     $('[data-btn="toggle-completed"]').click(function(){
         $('[data-cards="completed"]').toggle(500);
     })
-    //--------- toggle formulario ---------//
-    $('[data-newtask="expand-btn"]').click(function () { 
-        $('[data-newtask="form"]').toggle(500);
-    });
     createCard() // boton crear del formulario
 }
 

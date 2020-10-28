@@ -1,0 +1,117 @@
+:root{
+    --blue: #B8DFE6;
+    --red: #FF9AA2;
+    --lred: #FFB7B2;
+    --orange: #FFDAC1;
+    --lgreen: #E2F0CB;
+    --green: #B5EAD7;
+    --purple: #C5BBDE;
+    --lpurple: #C7CEEA;
+    --yellow: #F9EFC7;
+    --gray: #E1E2E1;
+    --lgray: #F5F5F6;
+}
+
+.bg-blue{
+    background-color: var(--blue);
+}
+.bg-red{
+    background-color: var(--red);
+}
+.bg-lred{
+    background-color: var(--lred);
+}
+.bg-orange{
+    background-color: var(--orange);
+}
+.bg-yellow{
+    background-color: var(--yellow);
+}
+.bg-lgreen{
+    background-color: var(--lgreen);
+}
+.bg-green{
+    background-color: var(--green);
+}
+.bg-purple{
+    background-color: var(--purple);
+}
+.bg-lpurple{
+    background-color: var(--lpurple);
+}
+.bg-gray{
+    background-color: var(--gray);
+}
+.bg-lgray{
+    background-color: var(--lgray);
+}
+
+
+.text-blue{
+    color: var(--blue);
+}
+.text-red{
+    color: var(--red);
+}
+.text-lred{
+    color: var(--lred);
+}
+.text-orange{
+    color: var(--orange);
+}
+.text-yellow{
+    color: var(--yellow);
+}
+.text-lgreen{
+    color: var(--lgreen);
+}
+.text-green{
+    color: var(--green);
+}
+.text-purple{
+    color: var(--purple);
+}
+.text-lpurple{
+    color: var(--lpurple);
+}
+.text-gray{
+    color: var(--gray);
+}
+.text-lgray{
+    color: var(--lgray);
+}
+
+
+.border-blue{
+    border: 1px solid var(--blue);
+}
+.border-red{
+    border: 1px solid var(--red);
+}
+.border-lred{
+    border: 1px solid var(--lred);
+}
+.border-orange{
+    border: 1px solid var(--orange);
+}
+.border-yellow{
+    border: 1px solid var(--yellow);
+}
+.border-lgreen{
+    border: 1px solid var(--lgreen);
+}
+.border-green{
+    border: 1px solid var(--green);
+}
+.border-purple{
+    border: 1px solid var(--purple);
+}
+.border-lpurple{
+    border: 1px solid var(--lpurple);
+}
+.border-gray{
+    border: 1px solid var(--gray);
+}
+.border-lgray{
+    border: 1px solid var(--lgray);
+}
