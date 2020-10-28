@@ -1,3 +1,20 @@
 *{
-    /border: 1px solid black;
+    /* border: 1px solid black; */
+    font-family: 'Inconsolata', monospace;
 }
+
+h1{
+    font-family: 'Major Mono Display', monospace;
+}
+
+h5{
+    font-weight: bold;
+}
+
+.dsnone{
+    display: none;
+}
+
+.tarj{
+}
+
